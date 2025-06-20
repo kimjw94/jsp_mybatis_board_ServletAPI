@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jw.jsp_mybatis_board_servletapi.mapper.MemberMapper">
+    <insert id="SignupMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
+        INSERT INTO MEMBER(MEMBER_ID, LOGIN_ID, PASSWORD, NAME, GENDER,
+                           NICKNAME, PROFILE_IMAGE, EMAIL, BIRTHDAY,
+                           CREATED_AT, STATUS)
+        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{login_id}, #{password}, #{name}, #{gender}, #{nickname}, #{profile_image},
+                #{email}, #{birthday}, sysdate, #{status})
+    </insert>
+
+
+</mapper>
