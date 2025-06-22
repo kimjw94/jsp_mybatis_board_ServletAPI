@@ -11,6 +11,9 @@
         VALUES (MEMBER_ID_SEQ.NEXTVAL, #{login_id}, #{password}, #{name}, #{gender}, #{nickname}, #{profile_image},
                 #{email}, #{birthday}, sysdate, #{status})
     </insert>
+    <select id="LoginMember" resultType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.LoginDTO">
+       select * from MEMBER where LOGIN_ID = #{login_id}
+    </select>
 
 
 </mapper>
