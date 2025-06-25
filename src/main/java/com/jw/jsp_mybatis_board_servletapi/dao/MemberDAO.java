@@ -108,12 +108,12 @@ public class MemberDAO {
                 if (loginMember.getPassword().equals(lDTO.getPassword())) {
                     req.setAttribute("serverReply", "로그인 성공");
                     req.getSession().setAttribute("LoginMember", loginMember);
-                    req.getSession().setMaxInactiveInterval(3000);
+                    req.getSession().setMaxInactiveInterval(3600);
                 } else {
                     req.setAttribute("serverReply", "로그인 실패:Password 틀림");
                 }
-            }else{
-                req.setAttribute("serverReply","로그인 실패:ID 없음");
+            } else {
+                req.setAttribute("serverReply", "로그인 실패:ID 없음");
             }
 
 
@@ -123,5 +123,91 @@ public class MemberDAO {
         }
 
     }
+
+    //회원정보 조회 기능 (로그인 체크로 사용 가능)
+    public void getMemberInfo(HttpServletRequest req) {
+        MemberDTO loginUser = (MemberDTO) req.getSession().getAttribute("LoginMember");
+
+        if (loginUser != null) {
+            long memberId = loginUser.getMember_id();
+            MemberDTO memberInfo = ss.getMapper(MemberMapper.class).getMemberInfo(memberId);
+            req.setAttribute("memberInfo", memberInfo);
+        } else {
+            req.setAttribute("serverReply", "로그인 정보가 없음");
+        }
+    }
+
+    //회원 정보 수정 기능
+    public void updateMemberInfo(MemberDTO mDTO, HttpServletRequest req) {
+        // 프로필이미지의 존재로 MultipartRequest 사용 준비
+        // 단, 설정은 회원가입시 설정과 동일해야함
+        String uploadPath = req.getSession().getServletContext().getRealPath("/resources/profileImageUpload/");
+
+        File profileFolder = new File(uploadPath);
+        if (!profileFolder.exists()) {
+            profileFolder.mkdirs();
+        }
+        int maxSize = 10 * 1024 * 1024; // 10MB
+        String encodingType = "UTF-8";
+
+        MultipartRequest mr = null;
+        //또한 회원 정보 기능을 사용해서 현재와 일치한지 비교해야하기 때문에 LoginMember Session 가져옴
+        MemberDTO loginUser = (MemberDTO) req.getSession().getAttribute("LoginMember");
+        if (loginUser == null) {
+            req.setAttribute("serverReply", "로그인이 필요합니다.");
+            return;
+        }
+        try {
+            mr = new MultipartRequest(req, uploadPath, maxSize, encodingType, new DefaultFileRenamePolicy());
+
+            String newProfileImageName = mr.getFilesystemName("profile_image");
+            if (newProfileImageName == null || newProfileImageName.isEmpty()) {
+                newProfileImageName = loginUser.getProfile_image();
+            }
+
+            String newPassword = mr.getParameter("password");
+            if (newPassword == null || newPassword.isEmpty() || newPassword.equals(loginUser.getPassword())) {
+                newPassword = loginUser.getPassword();
+            }
+
+            String newNickname = mr.getParameter("nickname");
+            if (newNickname == null || newNickname.isEmpty() || newNickname.equals(loginUser.getNickname())) {
+                newNickname = loginUser.getNickname();
+            }
+            String newEmail = mr.getParameter("email");
+
+            if (newEmail == null || newEmail.isEmpty() || newEmail.equals(loginUser.getEmail())) {
+                newEmail = loginUser.getEmail();
+            }
+            //where절로 조회를 인한 setting
+            mDTO.setMember_id(loginUser.getMember_id());
+
+            //변경값 세팅
+            mDTO.setProfile_image(newProfileImageName);
+            mDTO.setPassword(newPassword);
+            mDTO.setNickname(newNickname);
+            mDTO.setEmail(newEmail);
+
+            // mapper를 통해 수정
+            int UpdateMemberInfo = ss.getMapper(MemberMapper.class).UpdateMember(mDTO);
+
+            //수정이 완료되면 갱신된 정보를 Session에 있던 정보로 넣으며 새로 갱신
+            if (UpdateMemberInfo == 1) {
+                MemberDTO updatedInfo = ss.getMapper(MemberMapper.class).getMemberInfo(loginUser.getMember_id());
+                req.getSession().setAttribute("LoginMember", updatedInfo);
+                req.setAttribute("memberInfo", updatedInfo);
+                req.setAttribute("serverReply", "회원정보 수정 성공");
+            } else {
+                req.setAttribute("serverReply", "회원정보 수정 실패");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            req.setAttribute("serverReply", "회원정보 수정 중 오류가 발생했습니다.");
+        }
+
+
+    }
+
 
 }
