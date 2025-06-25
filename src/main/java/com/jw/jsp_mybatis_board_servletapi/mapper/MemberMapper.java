@@ -8,4 +8,6 @@ import java.util.List;
 public interface MemberMapper {
     int SignupMember(MemberDTO mDTO);
     List<MemberDTO> LoginMember(LoginDTO lDTO);
+    MemberDTO getMemberInfo(Long member_Id);
+    int UpdateMember(MemberDTO mDTO);
 }

@@ -56,4 +56,24 @@ public class MainController {
         return "redirect:/";
 
     }
+    //회원정보조회
+    @RequestMapping(value="/getMemberInfo",method=RequestMethod.GET)
+    public String getMemberInfo(HttpServletRequest req){
+        mDAO.getMemberInfo(req);
+        return "/member/memberInfo";
+    }
+    //회원정보수정페이지 이동
+    @RequestMapping(value="/updateMemberInfo",method=RequestMethod.GET)
+    public String goUpdateMemberInfo(HttpServletRequest req) {
+        mDAO.getMemberInfo(req);
+        return "/member/updateMember";
+    }
+
+    //회원정보수정
+    @RequestMapping(value = "/updateMemberInfo",method = RequestMethod.POST)
+    public String updateMemberInfo(MemberDTO mDTO, HttpServletRequest req) {
+        mDAO.updateMemberInfo(mDTO, req);
+        return"/member/memberInfo";
+    }
+
 }
