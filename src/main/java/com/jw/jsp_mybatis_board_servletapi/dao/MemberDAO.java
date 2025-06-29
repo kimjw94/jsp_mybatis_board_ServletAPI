@@ -209,5 +209,40 @@ public class MemberDAO {
 
     }
 
+    //회원탈퇴(논리적탈퇴)
+    public boolean withdrawMember(MemberDTO mDTO, HttpServletRequest req) {
+        String inputPw = req.getParameter("password");
+        MemberDTO loginUser = (MemberDTO) req.getSession().getAttribute("LoginMember");
+
+        if (!loginUser.getPassword().equals(inputPw)) {
+            req.setAttribute("serverReply", "탈퇴 실패: 비밀번호가 다릅니다.");
+            return false;
+        }
+
+        // 랜덤 ID 생성 및 중복 검사
+        String loginId;
+        do {
+            int number = (int) (Math.random() * 1_000_000);
+            String sixDigits = String.format("%06d", number);
+            loginId = "탈퇴한 회원" + sixDigits;
+        } while (ss.getMapper(MemberMapper.class).checkLoginIdExists(loginId) > 0);
+
+        // 탈퇴용 DTO 생성
+        mDTO.setMember_id(loginUser.getMember_id()); // WHERE 조건용
+        mDTO.setLogin_id(loginId);
+        mDTO.setNickname(loginId);
+        mDTO.setStatus("WITHDRAWN");
+
+        int result = ss.getMapper(MemberMapper.class).withdrawMember(mDTO);
+        if (result == 1) {
+            req.getSession().invalidate(); // 세션 만료
+            req.setAttribute("serverReply", "회원 탈퇴 완료");
+            return true;
+        } else {
+            req.setAttribute("serverReply", "회원 탈퇴 실패: DB 오류");
+            return false;
+        }
+    }
 
 }
+
