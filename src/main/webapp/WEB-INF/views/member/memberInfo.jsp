@@ -19,6 +19,7 @@
     회원 닉네임: ${memberInfo.nickname}
 </div>
 
-<a href="updateMemberInfo">회원 정보 수정</a>
+<a href="/updateMemberInfo">회원 정보 수정</a>
+<a href="/withdrawMember"> 회원 탈퇴</a>
 </body>
 </html>

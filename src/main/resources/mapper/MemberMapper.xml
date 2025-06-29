@@ -20,7 +20,19 @@
             PROFILE_IMAGE = #{profile_image}
         WHERE MEMBER_ID = #{member_id}
     </update>
-
+    <update id="withdrawMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
+        UPDATE MEMBER
+        SET
+            LOGIN_ID = #{login_id},
+            NICKNAME = #{nickname},
+            STATUS = #{status}
+        WHERE MEMBER_ID = #{member_id}
+    </update>
+    <select id="checkLoginIdExists" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE LOGIN_ID = #{login_id}
+    </select>
     <select id="LoginMember" resultType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.LoginDTO">
        select * from MEMBER where LOGIN_ID = #{login_id}
     </select>

@@ -10,4 +10,6 @@ public interface MemberMapper {
     List<MemberDTO> LoginMember(LoginDTO lDTO);
     MemberDTO getMemberInfo(Long member_Id);
     int UpdateMember(MemberDTO mDTO);
+    int withdrawMember(MemberDTO mDTO);
+    int checkLoginIdExists(String loginId);
 }
