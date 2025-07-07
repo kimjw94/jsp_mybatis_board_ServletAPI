@@ -1,4 +1,4 @@
-package com.jw.jsp_mybatis_board_servletapi.dto;
+package com.jw.jsp_mybatis_board_servletapi.dto.memberDTO;
 
 import java.util.Date;
 

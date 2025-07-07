@@ -1,7 +1,7 @@
 package com.jw.jsp_mybatis_board_servletapi.mapper;
 
-import com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO;
-import com.jw.jsp_mybatis_board_servletapi.dto.LoginDTO;
+import com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO;
+import com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.LoginDTO;
 
 import java.util.List;
 

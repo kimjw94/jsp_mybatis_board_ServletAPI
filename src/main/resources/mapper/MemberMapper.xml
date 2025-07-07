@@ -4,28 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jw.jsp_mybatis_board_servletapi.mapper.MemberMapper">
-    <insert id="SignupMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
+    <insert id="SignupMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO">
         INSERT INTO MEMBER(MEMBER_ID, LOGIN_ID, PASSWORD, NAME, GENDER,
                            NICKNAME, PROFILE_IMAGE, EMAIL, BIRTHDAY,
                            CREATED_AT, STATUS)
         VALUES (MEMBER_ID_SEQ.NEXTVAL, #{login_id}, #{password}, #{name}, #{gender}, #{nickname}, #{profile_image},
                 #{email}, #{birthday}, sysdate, #{status})
     </insert>
-    <update id="UpdateMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
+    <update id="UpdateMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO">
         UPDATE MEMBER
-        SET
-            NICKNAME = #{nickname},
-            EMAIL = #{email},
-            PASSWORD = #{password},
+        SET NICKNAME      = #{nickname},
+            EMAIL         = #{email},
+            PASSWORD      = #{password},
             PROFILE_IMAGE = #{profile_image}
         WHERE MEMBER_ID = #{member_id}
     </update>
-    <update id="withdrawMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
+    <update id="withdrawMember" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO">
         UPDATE MEMBER
-        SET
-            LOGIN_ID = #{login_id},
+        SET LOGIN_ID = #{login_id},
             NICKNAME = #{nickname},
-            STATUS = #{status}
+            STATUS   = #{status}
         WHERE MEMBER_ID = #{member_id}
     </update>
     <select id="checkLoginIdExists" parameterType="String" resultType="int">
@@ -33,13 +31,18 @@
         FROM MEMBER
         WHERE LOGIN_ID = #{login_id}
     </select>
-    <select id="LoginMember" resultType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.LoginDTO">
-       select * from MEMBER where LOGIN_ID = #{login_id}
+    <select id="LoginMember" resultType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO"
+            parameterType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.LoginDTO">
+        select *
+        from MEMBER
+        where LOGIN_ID = #{login_id}
     </select>
     <select id="getMemberInfo"
             parameterType="long"
-            resultType="com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO">
-        SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
+            resultType="com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO">
+        SELECT *
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
     </select>
 
 

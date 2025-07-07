@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jw.jsp_mybatis_board_servletapi.mapper.BoardMapper">
+    <select id="selectBoardByCategoryIdWithPagination" resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.BoardViewDTO">
+        SELECT *
+        FROM (SELECT ROWNUM RNUM, A.*
+              FROM (SELECT b.BOARD_ID          AS board_id,
+                           b.MEMBER_ID         AS member_id,
+                           b.BOARD_CATEGORY_ID AS category_id,
+                           b.TITLE             AS title,
+                           b.CREATED_AT        AS created_at,
+                           b.VIEW_COUNT        AS view_count,
+                           b.RECOMMEND         AS recommend,
+                           b.NOT_RECOMMEND     AS not_recommend,
+
+                           m.NICKNAME          AS writer_nickname,
+                           m.PROFILE_IMAGE     AS writer_profile_image
+                    FROM BOARD b
+                             JOIN
+                         MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+                             JOIN BOARD_CATEGORY bc ON b.BOARD_CATEGORY_ID = bc.BOARD_CATEGORY_ID
+                    WHERE b.BOARD_CATEGORY_ID = #{category_id}
+                    ORDER BY b.CREATED_AT DESC) A
+              WHERE ROWNUM &lt;= #{endRow})
+        WHERE RNUM &gt;= #{startRow}
+
+
+    </select>
+    <select id="countTotalRowsBoardByCategoryId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM BOARD
+        WHERE BOARD_CATEGORY_ID = #{category_id}
+    </select>
+</mapper>

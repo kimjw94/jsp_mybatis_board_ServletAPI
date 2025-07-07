@@ -1,7 +1,7 @@
 package com.jw.jsp_mybatis_board_servletapi.dao;
 
-import com.jw.jsp_mybatis_board_servletapi.dto.LoginDTO;
-import com.jw.jsp_mybatis_board_servletapi.dto.MemberDTO;
+import com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.LoginDTO;
+import com.jw.jsp_mybatis_board_servletapi.dto.memberDTO.MemberDTO;
 import com.jw.jsp_mybatis_board_servletapi.mapper.MemberMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -214,28 +214,29 @@ public class MemberDAO {
         String inputPw = req.getParameter("password");
         MemberDTO loginUser = (MemberDTO) req.getSession().getAttribute("LoginMember");
 
+        // 1. 탈퇴 재확인용 비밀번호 비교
         if (!loginUser.getPassword().equals(inputPw)) {
             req.setAttribute("serverReply", "탈퇴 실패: 비밀번호가 다릅니다.");
             return false;
         }
 
-        // 랜덤 ID 생성 및 중복 검사
+        // 2. 랜덤 ID/Nickname 생성 (중복 방지)
         String loginId;
         do {
             int number = (int) (Math.random() * 1_000_000);
-            String sixDigits = String.format("%06d", number);
-            loginId = "탈퇴한 회원" + sixDigits;
+            loginId = "탈퇴한 회원" + String.format("%06d", number);
         } while (ss.getMapper(MemberMapper.class).checkLoginIdExists(loginId) > 0);
 
-        // 탈퇴용 DTO 생성
-        mDTO.setMember_id(loginUser.getMember_id()); // WHERE 조건용
+        // 3. 탈퇴용 DTO 세팅
+        mDTO.setMember_id(loginUser.getMember_id());
         mDTO.setLogin_id(loginId);
         mDTO.setNickname(loginId);
         mDTO.setStatus("WITHDRAWN");
 
+        // 4. DB 업데이트 실행 및 처리 결과 리턴
         int result = ss.getMapper(MemberMapper.class).withdrawMember(mDTO);
         if (result == 1) {
-            req.getSession().invalidate(); // 세션 만료
+            req.getSession().setAttribute("LoginMember", null); // 세션 속성 초기화
             req.setAttribute("serverReply", "회원 탈퇴 완료");
             return true;
         } else {
