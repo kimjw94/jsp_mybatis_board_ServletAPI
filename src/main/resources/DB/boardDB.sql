@@ -5,8 +5,22 @@
 -- 게시판 카테고리 테이블
 CREATE TABLE BOARD_CATEGORY (
                                 BOARD_CATEGORY_ID   NUMBER(19) PRIMARY KEY,
-                                BOARD_CATEGORY_NAME VARCHAR2(20) NOT NULL
+                                BOARD_CATEGORY_NAME VARCHAR2(50) NOT NULL,
+                                BOARD_TYPE VARCHAR2(50) NOT NULL
 );
+
+-- 시퀀스
+CREATE SEQUENCE BOARD_CATEGORY_ID_SEQ;
+
+INSERT INTO BOARD_CATEGORY VALUES (BOARD_CATEGORY_ID_SEQ.nextval,'funny','기본');
+INSERT INTO BOARD_CATEGORY VALUES (BOARD_CATEGORY_ID_SEQ.nextval,'picture','기본');
+INSERT INTO BOARD_CATEGORY VALUES (BOARD_CATEGORY_ID_SEQ.nextval,'freeToTalK','기본');
+
+
+
+SELECT * FROM BOARD_CATEGORY;
+
+
 
 -- 게시글 테이블
 CREATE TABLE BOARD (
@@ -15,7 +29,7 @@ CREATE TABLE BOARD (
                        BOARD_CATEGORY_ID  NUMBER(19) NOT NULL,
                        TITLE              VARCHAR2(255) NOT NULL,
                        CONTENTS           CLOB NOT NULL,
-                       CREATED            DATE DEFAULT SYSDATE NOT NULL,
+                       CREATED_AT            DATE DEFAULT SYSDATE NOT NULL,
                        VIEW_COUNT         NUMBER(19) DEFAULT 0 NOT NULL,
                        RECOMMEND          NUMBER(19) DEFAULT 0 NOT NULL,
                        NOT_RECOMMEND      NUMBER(19) DEFAULT 0 NOT NULL,
@@ -118,7 +132,7 @@ CREATE TABLE COMMENT_VOTE_LOG(
 -- 2. 시퀀스 생성
 -- ================================
 
-CREATE SEQUENCE BOARD_CATEGORY_ID_SEQ;
+
 CREATE SEQUENCE BOARD_ID_SEQ;
 CREATE SEQUENCE BOARD_ATTACHMENT_ID_SEQ;
 CREATE SEQUENCE BOARD_COMMENT_ID_SEQ;

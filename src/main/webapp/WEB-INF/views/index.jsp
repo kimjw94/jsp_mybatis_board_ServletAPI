@@ -8,6 +8,11 @@
 </head>
 <body>
 
+<a href="/board?category_id=1">웃긴자료</a>
+<a href="/board?category_id=2">사진</a>
+<a href="/board?category_id=3">자유 게시판</a>
+
+
 <a href="/signup">회원가입</a> <br>
 
 <c:choose>
