@@ -4,7 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jw.jsp_mybatis_board_servletapi.mapper.BoardMapper">
-    <select id="selectBoardByCategoryIdWithPagination" resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.BoardViewDTO">
+    <insert id="createPost" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.InsertPostDTO">
+        <selectKey resultType="long" keyProperty="board_id" order="BEFORE">
+            SELECT BOARD_ID_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO BOARD (
+        BOARD_ID, MEMBER_ID, BOARD_CATEGORY_ID, TITLE, CONTENTS
+        ) VALUES (
+        #{board_id}, #{member_id}, #{board_category_id}, #{title}, #{contents}
+        )
+    </insert>
+    <insert id="insertPostAttachment"
+            parameterType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.PostAttachmentDTO">
+        INSERT INTO BOARD_ATTACHMENT(BOARD_ATTACHMENT_ID, BOARD_ID, FILE_NAME, FILE_PATH, FILE_TYPE, FILE_SIZE)
+        VALUES (BOARD_ATTACHMENT_ID_SEQ.nextval, #{board_id}, #{file_name}, #{file_path}, #{file_type}, #{file_size})
+    </insert>
+    <select id="selectBoardByCategoryIdWithPagination"
+            resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.BoardViewDTO">
         SELECT *
         FROM (SELECT ROWNUM RNUM, A.*
               FROM (SELECT b.BOARD_ID          AS board_id,
@@ -30,7 +46,59 @@
 
     </select>
     <select id="countTotalRowsBoardByCategoryId" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM BOARD
+        SELECT COUNT(*)
+        FROM BOARD
         WHERE BOARD_CATEGORY_ID = #{category_id}
+    </select>
+    <select id="getPostById" resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.ViewPostDTO">
+        SELECT B.BOARD_ID,
+               B.MEMBER_ID,
+               B.BOARD_CATEGORY_ID,
+               B.TITLE,
+               B.CONTENTS,
+               B.CREATED_AT,
+               B.VIEW_COUNT,
+               B.RECOMMEND,
+               B.NOT_RECOMMEND,
+
+               M.NICKNAME            AS writer_nickname,
+               M.PROFILE_IMAGE       AS writer_profile_image,
+
+               C.BOARD_CATEGORY_NAME AS board_category_name
+
+        FROM BOARD B
+                 JOIN MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
+                 JOIN BOARD_CATEGORY C ON B.BOARD_CATEGORY_ID = C.BOARD_CATEGORY_ID
+        WHERE B.BOARD_ID = #{board_id}
+    </select>
+    <select id="getAttachmentsByBoardId"
+            resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.PostAttachmentDTO">
+        SELECT BOARD_ATTACHMENT_ID, BOARD_ID, FILE_NAME, FILE_PATH, FILE_TYPE, FILE_SIZE, UPLOADED_AT
+        FROM BOARD_ATTACHMENT
+        WHERE BOARD_ID = #{board_id}
+    </select>
+    <insert id="InsertComment" parameterType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.InsertCommentDTO">
+        INSERT INTO BOARD_COMMENT(BOARD_COMMENT_ID, BOARD_ID, MEMBER_ID, PARENT_ID, COMMENTS)
+        VALUES (BOARD_COMMENT_ID_SEQ.nextval, #{board_id}, #{member_id}, #{parent_id, jdbcType=NUMERIC}, #{comments})
+    </insert>
+
+    <select id="getCommentsbyBoardId" resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.GetBoardCommentDTO">
+        SELECT BC.BOARD_COMMENT_ID,
+               BC.BOARD_ID,
+               BC.MEMBER_ID,
+               BC.PARENT_ID,
+               BC.COMMENTS,
+               BC.CREATED_AT,
+               BC.STATUS,
+               BC.RECOMMEND,
+               BC.NOT_RECOMMEND,
+
+               M.NICKNAME      AS writer_nickname,
+               M.PROFILE_IMAGE AS writer_profile_image
+
+        FROM BOARD_COMMENT BC
+            JOIN MEMBER M ON BC.MEMBER_ID = M.MEMBER_ID
+        WHERE BC.BOARD_ID =#{board_id}
+
     </select>
 </mapper>
