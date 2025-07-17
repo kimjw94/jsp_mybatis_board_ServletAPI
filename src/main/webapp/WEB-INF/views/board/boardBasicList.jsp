@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<a href="/writeBoard">게시글 작성</a>
+<a href="/createPost">게시글 작성</a>
 
 <table>
     <thead>
@@ -24,7 +24,11 @@
         <c:when test="${not empty boardList}">
             <c:forEach var="b" items="${boardList}">
                 <tr>
-                    <td>${b.title} (추천: ${b.recommend}, 비추천: ${b.not_recommend})</td>
+                    <td>
+                        <a href="/viewPost?board_id=${b.board_id}"> ${b.title} (추천: ${b.recommend},
+                            비추천: ${b.not_recommend})
+                        </a>
+                    </td>
                     <td>
                         <img src="resources/profileImageUpload/${b.writer_profile_image}" width="20" height="20">
                             ${b.writer_nickname}
