@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시판</title>
+        <title>게시판</title>
+    <link rel="stylesheet" href="resources/css/boardBasicList.css"/>
+    <script>
+        const isLoggedIn = ${not empty sessionScope.LoginMember}
+    </script>
 </head>
 <body>
 
-<a href="/createPost">게시글 작성</a>
+<a href="#" id="createPostBtn" onclick="checkLoginAndRedirect()" >게시글 작성</a>
 
 <table>
     <thead>
@@ -30,10 +35,10 @@
                         </a>
                     </td>
                     <td>
-                        <img src="resources/profileImageUpload/${b.writer_profile_image}" width="20" height="20">
+                        <img src="resources/img/profileImageUpload/${b.writer_profile_image}" width="20" height="20">
                             ${b.writer_nickname}
                     </td>
-                    <td>${b.created_at}</td>
+                    <td><fmt:formatDate value="${b.created_at}" pattern="yyyy년 MM월 dd일 HH:mm"/></td>
                     <td>${b.view_count}</td>
                 </tr>
             </c:forEach>
@@ -62,6 +67,7 @@
         </c:forEach>
     </div>
 </c:if>
+<script type="text/javascript" src="resources/js/boardBasicList.js"></script>
 
 </body>
 </html>

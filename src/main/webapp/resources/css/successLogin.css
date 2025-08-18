@@ -1,0 +1,30 @@
+
+.successLogin_profileImage {
+
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+.successLogin_container {
+    display: flex;
+      flex-direction: column;   /* 가로 → 세로 배치 */
+    align-items: center;      /* 가운데 정렬 */
+    justify-content: center;
+
+}
+.successLogin_btns a {
+    display: inline-block;
+    font-size: 12px;
+    padding: 8px 8px;
+    margin: 5px;
+    background: #D94925;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.successLogin_btns a:hover {
+    background: #b5381c;
+}

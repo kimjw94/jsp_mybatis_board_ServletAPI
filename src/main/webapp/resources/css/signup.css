@@ -1,0 +1,121 @@
+/*페이지 제목*/
+.signup_title {
+    font-weight: bold;
+    font-size: 20px;
+
+}
+/*제목과 메인 분할선*/
+.main_divider {
+    border: none;
+    border-top: 3px solid #D94925;
+}
+/*회원가입 폼 전체 틀*/
+.signup_form_group{
+    display: flex;
+    align-items: center;
+    margin: 10px 10px;
+}
+.signup_form_group label{
+    width: 170px;
+    white-space: nowrap; /* 고정 너비로 정렬 유지 */
+    font-size: 16px;
+    padding: 5px 3px;
+    text-align: center;
+    margin-right: 0px;
+}
+.signup_form_group input{
+    flex: 1;
+    margin-right: 5px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 0;
+}
+
+.signup_form_separator{
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 20px 0;
+
+}
+
+.signup_form_group_id_space{
+    width:200px;
+}
+
+.signup_form_group_space{
+    width: 300px;
+}
+.signup_email_domain_direct_enter{
+    margin-left : 10px;
+}
+
+.signup_radio_group {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+}
+
+.signup_radio_group .radio_option {
+    flex: none;
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.IdDuplicateBtn {
+    margin-left: 10px;
+    width: auto;
+    padding: 10px 16px;
+    white-space: nowrap;
+}
+button {
+    background-color: #D94925;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #c13f20;
+}
+
+/* 회원가입 버튼 전용 스타일 */
+.signup_form_group button[type="submit"] {
+    margin-left: 170px; /* label 고정 폭에 맞춰 정렬 */
+    width: 400px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#resultDiv_Id,
+#resultDiv_Password,
+#resultDiv_PasswordConfirm,
+#resultDiv_name,
+#resultDiv_email,
+#resultDiv_birthday,
+#resultDiv_nickname,
+#resultDiv_profileImage{
+    padding-left: 180px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size :15px;
+
+
+}
+
+.signup_login_id_guide,
+.signup_password_guide,
+.signup_nickname_guide,
+.signup_profileImage_guide{
+    margin-left:180px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}

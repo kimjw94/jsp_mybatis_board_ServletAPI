@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'mainFont', sans-serif;
+
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%; /* 화면 전체 */
+    background: #fff;
+    flex: 0 0 auto;
+}
+
+.header_inner {
+    max-width: 1200px; /* 본문과 동일 폭 */
+    margin: 0 auto; /* 가운데 정렬 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 25px;
+}
+
+.footer {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 20px;
+    background: #f5f5f5;
+    color: #777;
+    max-width: 1200px; /* 헤더/컨테이너와 동일 폭 */
+    margin: 0 auto; /* 중앙 정렬 */
+    width: 100%;
+}
+
+.header_logo img {
+    height: 150px;
+    width: 200px;
+}
+
+.header a {
+    margin: 0 10px;
+    padding: 0 10px;
+    text-decoration: none;
+    color: black;
+
+}
+
+.container {
+    flex: 1 0 auto; /* 본문이 남는 공간을 채움 */
+    display: flex;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+
+.loginPage {
+    margin: 5px 5px;
+    border: 1px solid lightgray;
+    width: 250px;
+    height: auto;
+
+
+}
+
+.sitePage {
+    margin: 5px 5px;
+    flex: 1;
+    border: 1px solid lightgray; /* 시각적으로 확인 */
+    padding: 20px;
+
+
+}
+
+.DivisionLine {
+    border: none;
+    border-top: 1px solid lightgray;
+    max-width: 1200px;   /* 본문과 동일 너비 */
+    margin: 0 auto;
+
+}

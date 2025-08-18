@@ -1,0 +1,101 @@
+/* 게시글 작성 버튼 */
+#createPostBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #D94925;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#createPostBtn:hover {
+    background-color: #c6391d;
+}
+
+/* 게시판 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* 모서리 둥글게 처리 */
+}
+
+thead {
+    background-color: #f0f0f0;
+}
+
+th {
+    padding:5px;
+    text-align: center;
+    font-weight: 700;
+    border-bottom: 2px solid #ddd;
+    color: #555;
+}
+
+td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* 제목 링크 스타일 */
+td a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: block; /* 링크 전체를 클릭 가능하게 */
+    text-align: left; /* 제목은 왼쪽 정렬 */
+}
+
+td a:hover {
+    color: #D94925;
+    text-decoration: underline;
+}
+
+/* 게시글이 없을 때 스타일 */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 프로필 이미지 */
+td img {
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.pagination a, .pagination strong {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #D94925;
+    color: #fff;
+    border-color: #D94925;
+}
+
+.pagination strong {
+    background-color: #D94925;
+    color: #fff;
+    border-color: #D94925;
+    font-weight: 700;
+}

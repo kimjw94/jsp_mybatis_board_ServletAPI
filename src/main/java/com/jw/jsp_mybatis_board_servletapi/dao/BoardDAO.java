@@ -39,7 +39,7 @@ public class BoardDAO {
     //게시글 작성 비즈니스 로직
     public long createPost(HttpServletRequest req) {
         //MultipartRequest 설정
-        String path = req.getSession().getServletContext().getRealPath("/resources/boardAttachment/");
+        String path = req.getSession().getServletContext().getRealPath("/resources/img/boardAttachment/");
         File uploadAttachment = new File(path);
 
         //path 에 폴더 없으면 생성
@@ -105,7 +105,7 @@ public class BoardDAO {
                     attachmentDTO.setFile_type(fileType);
 
                     // DB에는 상대경로 또는 웹 접근 경로만 저장
-                    attachmentDTO.setFile_path("/resources/boardAttachment/" + file_name);
+                    attachmentDTO.setFile_path("/resources/img/boardAttachment/" + file_name);
 
                     ss.getMapper(BoardMapper.class).insertPostAttachment(attachmentDTO);
                 }
@@ -123,8 +123,18 @@ public class BoardDAO {
                             HttpServletRequest req) {
         ViewPostDTO post = ss.getMapper(BoardMapper.class).getPostById(board_id);
         List<PostAttachmentDTO> files = ss.getMapper(BoardMapper.class).getAttachmentsByBoardId(board_id);
+        // 디버깅 코드
+        if (files != null && !files.isEmpty()) {
+            System.out.println("첨부 파일이 " + files.size() + "개 발견되었습니다.");
+            for (PostAttachmentDTO attachment : files) {
+                System.out.println("파일 이름: " + attachment.getFile_name());
+            }
+        } else {
+            System.out.println("첨부 파일이 없거나 조회에 실패했습니다.");
+        }
         post.setAttachments(files);
         req.setAttribute("post", post);
+
     }
 
     //댓글 등록 로직
@@ -154,9 +164,9 @@ public class BoardDAO {
 
     //댓글 조회 로직
     public void getCommentsbyBoardId(Long board_id,
-                                HttpServletRequest req){
-      List<GetBoardCommentDTO> getBoardComments = ss.getMapper(BoardMapper.class).getCommentsbyBoardId(board_id);
-      req.setAttribute("commentList", getBoardComments);
+                                     HttpServletRequest req) {
+        List<GetBoardCommentDTO> getBoardComments = ss.getMapper(BoardMapper.class).getCommentsbyBoardId(board_id);
+        req.setAttribute("commentList", getBoardComments);
     }
 
 }

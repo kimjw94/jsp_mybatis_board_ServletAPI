@@ -72,8 +72,16 @@
         WHERE B.BOARD_ID = #{board_id}
     </select>
     <select id="getAttachmentsByBoardId"
-            resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.PostAttachmentDTO">
-        SELECT BOARD_ATTACHMENT_ID, BOARD_ID, FILE_NAME, FILE_PATH, FILE_TYPE, FILE_SIZE, UPLOADED_AT
+            resultType="com.jw.jsp_mybatis_board_servletapi.dto.boardDTO.PostAttachmentDTO"
+            parameterType="long">
+        SELECT
+            BOARD_ATTACHMENT_ID as board_attachment_id,
+            BOARD_ID as board_id,
+            FILE_NAME as file_name,
+            FILE_PATH as file_path,
+            FILE_TYPE as file_type,
+            FILE_SIZE as file_size,
+            UPLOADED_AT as uploaded_at
         FROM BOARD_ATTACHMENT
         WHERE BOARD_ID = #{board_id}
     </select>

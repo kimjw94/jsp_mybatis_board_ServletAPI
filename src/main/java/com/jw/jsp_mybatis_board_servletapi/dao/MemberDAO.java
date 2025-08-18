@@ -21,9 +21,10 @@ public class MemberDAO {
     @Autowired
     SqlSession ss;
 
+    //회원가입
     public void SignupMember(MemberDTO mDTO, HttpServletRequest req) {
         // 1. 업로드 경로 설정
-        String uploadPath = req.getSession().getServletContext().getRealPath("/resources/profileImageUpload/");
+        String uploadPath = req.getSession().getServletContext().getRealPath("/resources/img/profileImageUpload/");
 
         // 2. 업로드 폴더 존재 확인 및 생성
         File profileFolder = new File(uploadPath);
@@ -94,6 +95,19 @@ public class MemberDAO {
             req.setAttribute("serverReply", "회원가입 중 오류 발생");
         }
     }
+
+    public boolean checkLoginIdExists(String login_id){
+        System.out.println("▶ 전달받은 login_id: [" + login_id + "]");
+        int count = ss.getMapper(MemberMapper.class).checkLoginIdExists(login_id);
+        System.out.println("💬 중복 ID 개수: " + count);  // 로그 찍기
+        return count > 0;
+    }
+
+    public boolean checkNicknameExists(String nickname){
+        int count = ss.getMapper(MemberMapper.class).checkNicknameExists(nickname);
+        return count > 0; //count 가 0보다 크면 true -> 닉네임 존재/ count가 0이면 false -> 닉네임 없음
+    }
+
 
 
     //로그인 기능

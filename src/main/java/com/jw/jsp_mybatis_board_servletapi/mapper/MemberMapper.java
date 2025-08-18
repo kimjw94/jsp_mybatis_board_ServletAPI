@@ -11,5 +11,6 @@ public interface MemberMapper {
     MemberDTO getMemberInfo(Long member_Id);
     int UpdateMember(MemberDTO mDTO);
     int withdrawMember(MemberDTO mDTO);
-    int checkLoginIdExists(String loginId);
+    int checkLoginIdExists(String login_id);
+    int checkNicknameExists(String nickname);
 }

@@ -5,32 +5,38 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="resources/css/font.css">
+    <link rel="stylesheet" href="resources/css/index.css">
+
+    <script type="text/javascript" src="resources/js/jQuery.js"></script>
 </head>
 <body>
-
-<a href="/board?category_id=1">웃긴자료</a>
-<a href="/board?category_id=2">사진</a>
-<a href="/board?category_id=3">자유 게시판</a>
-
-
-<a href="/signup">회원가입</a> <br>
-
-<c:choose>
-    <c:when test="${sessionScope.LoginMember == null}">
-        <div>
-            <span>로그인</span>
-            <form action="/login" method="post">
-                아이디: <input type="text" name="login_id"><br>
-                비밀번호: <input type="password" name="password"><br>
-                <button type="submit">로그인</button>
-            </form>
+<header class="header">
+    <div class="header_inner">
+        <div class="header_logo">
+            <a href="/"><img src="resources/img/mainLogo/logo.png"></a>
         </div>
-    </c:when>
-    <c:otherwise>
-        <a href="/logout">로그아웃</a> <br>
-        <a href="/getMemberInfo">회원정보조회</a>
-    </c:otherwise>
-</c:choose>
+        <div class="header_nav_links">
+            <a href="/board?category_id=1">웃긴자료</a>
+            <a href="/board?category_id=2">사진</a>
+            <a href="/board?category_id=3">자유 게시판</a>
+        </div>
+    </div>
+</header>
+<hr class="DivisionLine">
+<div class="container">
+    <div class="loginPage">
+        <jsp:include page="${lp}"/>
+    </div>
 
+    <div class="sitePage">
+        <jsp:include page="${cp}"/>
+    </div>
+</div>
+
+<hr class="DivisionLine">
+<footer class="footer">
+    © 2025 AGORA. All rights reserved.
+</footer>
 </body>
 </html>

@@ -23,13 +23,25 @@ public class BoardController {
                                                     @RequestParam(value = "size", required = false, defaultValue = "20") Integer size,
                                                     HttpServletRequest req) {
         bDAO.getBoardByCategoryIdWithPagination(category_id, page, size, req);
-        return "board/boardBasicList";
+        if (req.getSession().getAttribute("LoginMember") != null) {
+            req.setAttribute("lp", "member/successLogin.jsp");
+        } else {
+            req.setAttribute("lp", "loginBox.jsp");
+        }
+        req.setAttribute("cp","board/boardBasicList.jsp");
+        return "index";
     }
 
     //게시글 작성 페이지 이동
     @RequestMapping(value = "/createPost", method = RequestMethod.GET)
     public String goCreatePostPage(HttpServletRequest req) {
-        return "board/createPost";
+        if (req.getSession().getAttribute("LoginMember") != null) {
+            req.setAttribute("lp", "member/successLogin.jsp");
+        } else {
+            req.setAttribute("lp", "loginBox.jsp");
+        }
+        req.setAttribute("cp","board/createPost.jsp");
+        return "index";
     }
 
     //게시글 작성 페이지
@@ -45,7 +57,15 @@ public class BoardController {
                                  HttpServletRequest req) {
         bDAO.getPostById(board_id, req);
         bDAO.getCommentsbyBoardId(board_id, req);
-        return "board/viewPost";
+        if (req.getSession().getAttribute("LoginMember") != null) {
+            req.setAttribute("lp", "member/successLogin.jsp");
+        } else {
+            req.setAttribute("lp", "loginBox.jsp");
+        }
+        req.setAttribute("cp","board/viewPost.jsp");
+        return "index";
+
+
     }
 
     //댓글 등록 로직

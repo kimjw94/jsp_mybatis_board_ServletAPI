@@ -1,0 +1,103 @@
+/* 전체 컨테이너 */
+.memberinfo_container {
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    font-family: 'Arial', sans-serif;
+}
+
+/* 제목 */
+.memberinfo_title {
+    margin-left:10px;
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* 구분선 */
+.main_divider {
+    border: none;
+    border-top: 3px solid #D94925;
+    margin-bottom: 30px;
+}
+
+/* 그룹 (프로필 + 상세정보 + 버튼) */
+.memberinfo_group {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap; /* 화면 줄면 세로 정렬 */
+}
+
+/* 프로필 영역 */
+.memberinfo_profile {
+    text-align: center;
+    flex: 0 0 180px;
+}
+.memberinfo_profileImage {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #eee;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* 상세 정보 */
+.memberinfo_details {
+    flex: 1;
+}
+.info_row {
+    display: flex;
+    margin-bottom: 30px;
+}
+.info_row label {
+    width: 100px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+
+}
+.info_row span {
+    flex: 1;
+    font-size: 20px;
+    color: #555;
+}
+
+/* 버튼 영역 */
+.memberinfo_actions {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+
+}
+.btn {
+    background-color: #D94925;
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+.btn:hover {
+    background-color: #c13f20;
+}
+.btn.withdraw {
+    background-color: #666;
+}
+.btn.withdraw:hover {
+    background-color: #444;
+}
+
+.memberinfo_separator{
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 30px 0;
+}
